@@ -1,0 +1,38 @@
+version: "2.4"
+
+networks:
+  dev:
+    driver: bridge
+
+services:
+  bw_beverages:
+    image: docker.io/library/bw_beverages
+    container_name: bw_beverages-services
+    ports:
+      - "8088:80"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ConnectionStrings__DefaultConnection=User ID=postgres;Password=postgres;Server=bwbeverages_db;Port=5432;Database=BWDbBeverages;Pooling=true;
+      - ASPNETCORE_URLS=http://+:80
+    networks:
+      - dev
+
+  bwbeverages_db:
+    image: postgres:latest
+    container_name: bwbeverages_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=BWDbBeverages
+    ports:
+      - "5434:5432"
+    restart: always
+    volumes:
+      - bwbeverages_data:/var/lib/postgresql/data
+    networks:
+      - dev
+
+volumes:
+  bwbeverages_data:
