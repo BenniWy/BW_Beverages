@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BW_Beverages.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20240411150200_initial-migration")]
-    partial class initialmigration
+    [Migration("20240411163411_inital-migration")]
+    partial class initalmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

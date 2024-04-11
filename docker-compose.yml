@@ -6,8 +6,8 @@ networks:
 
 services:
   bw_beverages:
-    image: docker.io/library/bw_beverages
-    container_name: bw_beverages-services
+    image: docker.io/library/bwbeverages
+    container_name: bwbeverages-services
     ports:
       - "8088:80"
     build:
