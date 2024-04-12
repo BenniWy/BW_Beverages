@@ -1,5 +1,6 @@
 using BW_Beverages.Data.Interfaces;
 using BW_Beverages.Data.Models;
+using BW_Beverages.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,10 @@ namespace DrinkAndGo.Controllers
         }
         
         public ViewResult List(){
-            var drinks = _drinkRepository.Drinks;
-            return View(drinks);
+            DrinksListViewModel vm = new DrinksListViewModel();
+            vm.Drinks = _drinkRepository.Drinks;
+            vm.CurrentCategory = "DrinkCategory";
+            return View(vm);
         }
     }
 }
