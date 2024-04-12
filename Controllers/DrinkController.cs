@@ -1,44 +1,27 @@
-using BW_Beverages.Data;
-using BW_Beverages.Models;
+using BW_Beverages.Data.Interfaces;
+using BW_Beverages.Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace BW_Beverages.Controllers;
+namespace DrinkAndGo.Controllers
+{
+    public class DrinkController : Controller
+    {
+        private readonly IDrinkRepository _drinkRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-[ApiController]
-[Route("[controller]")]
-public class DrinksController : ControllerBase{
-    private readonly ILogger<DrinksController> _logger;
-    private readonly ApiDbContext _context;
-
-    public DrinksController(
-        ILogger<DrinksController> logger,
-        ApiDbContext context){
-        _logger=logger;
-        _context=context;
-    }
-
-    [HttpGet(Name ="GetAllDrinks")]
-    public async Task<IActionResult> Get(){
-        var drink = new Drink(){
-            DrinkId = 1234,
-            Name = "Water",
-            ShortDescription = "H2O",
-            LongDescription = "My H2O",
-            Price = 4.5m,
-            ImageUrl = "www",
-            ImageThumbnailUrl = "www",
-            IsPreferredDrink = true,
-            InStock = true,
-            CategoryId = 4321
-        };
-
-        _context.Add(drink);
-        await _context.SaveChangesAsync();
-
-        var allDrinks = await _context.Drinks.ToListAsync();
-
-        return Ok(allDrinks);
-
+        public DrinkController(IDrinkRepository drinkRepository, ICategoryRepository categoryRepository)
+        {
+            _drinkRepository = drinkRepository;
+            _categoryRepository = categoryRepository;
+        }
+        
+        public ViewResult List(){
+            var drinks = _drinkRepository.Drinks;
+            return View(drinks);
+        }
     }
 }

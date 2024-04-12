@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BW_Beverages.Models;
+namespace BW_Beverages.Data.Models;
 
 public class Drink
 {
@@ -17,5 +17,5 @@ public class Drink
     public bool IsPreferredDrink { get; set; }
     public bool InStock { get; set; }
     public int CategoryId { get; set; }
-    //public virtual Category Category { get; set; }
+    public virtual Category Category { get; set; }
 }

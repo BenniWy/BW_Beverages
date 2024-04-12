@@ -1,4 +1,4 @@
-using BW_Beverages.Models;
+using BW_Beverages.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace BW_Beverages.Data
 {
-    public class ApiDbContext: DbContext
+    public class AppDbContext: DbContext
     {
-        public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
 
         public DbSet<Drink> Drinks { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-namespace BW_Beverages.Models;
+namespace BW_Beverages.Data.Models;
 
 public class ErrorViewModel
 {

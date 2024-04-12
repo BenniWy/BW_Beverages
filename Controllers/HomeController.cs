@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using BW_Beverages.Models;
+using BW_Beverages.Data.Models;
 
 namespace BW_Beverages.Controllers;
 

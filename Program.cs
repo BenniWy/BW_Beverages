@@ -1,4 +1,6 @@
 using BW_Beverages.Data;
+using BW_Beverages.Data.Interfaces;
+using BW_Beverages.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,8 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<ApiDbContext>(options => 
+builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseNpgsql(connection));
+
+builder.Services.AddTransient<IDrinkRepository, DrinkRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

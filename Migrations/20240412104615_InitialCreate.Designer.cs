@@ -2,6 +2,7 @@
 using BW_Beverages.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -9,10 +10,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace BW_Beverages.Migrations
 {
-    [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(AppDbContext))]
+    [Migration("20240412104615_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +24,28 @@ namespace BW_Beverages.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("BW_Beverages.Models.Drink", b =>
+            modelBuilder.Entity("BW_Beverages.Data.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CategoryId"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("BW_Beverages.Data.Models.Drink", b =>
                 {
                     b.Property<int>("DrinkId")
                         .ValueGeneratedOnAdd()
@@ -63,7 +87,25 @@ namespace BW_Beverages.Migrations
 
                     b.HasKey("DrinkId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Drinks");
+                });
+
+            modelBuilder.Entity("BW_Beverages.Data.Models.Drink", b =>
+                {
+                    b.HasOne("BW_Beverages.Data.Models.Category", "Category")
+                        .WithMany("Drinks")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("BW_Beverages.Data.Models.Category", b =>
+                {
+                    b.Navigation("Drinks");
                 });
 #pragma warning restore 612, 618
         }
