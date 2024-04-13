@@ -42,8 +42,18 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "drinkdetails",
+    pattern: "Drink/Details/{drinkId?}",
+    defaults: new { Controller = "Drink", action = "Details" });
+
+app.MapControllerRoute(
+    name: "categoryfilter",
+    pattern: "Drink/{action}/{category?}",
+    defaults: new { Controller = "Drink", action = "List" });
+
+app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{Id?}");;
 
 DbInitializer.Seed(app.Services);
 

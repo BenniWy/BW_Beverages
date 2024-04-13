@@ -3,36 +3,37 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="~/Content/site.css" rel="stylesheet">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/site.css" rel="stylesheet" />
     <title>BW Beverages</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
+        <div class="container">
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">BW Beverages</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="About" asp-action="Index">About</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+<!-- Git -->
+                    <li class="nav-item"><a class="nav-link" asp-controller="About" asp-action="Index">About</a></li>
+<!-- Git -->
+                    <li class="nav-item"><a class="nav-link" asp-controller="Contact" asp-action="Index">Contact Us</a></li>
                 </ul>
-                <form class="d-flex ms-auto" asp-controller="Drink" asp-action="Search" method="get">
+<!-- Git -->
+                <form class="d-flex" asp-controller="Drink" asp-action="Search" method="get">
                     <input class="form-control me-2" type="search" placeholder="Search for a drink" aria-label="Search" name="searchString" value="@ViewData["searchString"]">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
         </div>
     </nav>
     <div class="container body-content" style="padding:50px;">
         @RenderBody()
-        <hr>
-        <footer class="text-center">
+        <hr />
+        <footer>
             <p><a target="_blank" href="https://github.com/BenniWy">&copy; 2024 - Benjamin Wynants</a></p>
         </footer>
     </div>
