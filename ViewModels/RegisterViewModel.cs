@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BW_Beverages.ViewModels
 {
-    public class LoginViewModel
+    public class RegisterViewModel
     {
         [Required]
         [Display(Name = "User name")]

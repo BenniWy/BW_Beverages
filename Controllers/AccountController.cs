@@ -1,7 +1,6 @@
 using BW_Beverages.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -15,7 +14,9 @@ namespace BW_Beverages.Controllers
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
+            Console.WriteLine("+++++UserManager: " +_userManager+ "\n");
             _signInManager = signInManager;
+            Console.WriteLine("+++++SignInManager: " +_signInManager+ "\n");
         }
 
         public IActionResult Login(string returnUrl)
@@ -27,6 +28,7 @@ namespace BW_Beverages.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
             if (!ModelState.IsValid)
@@ -48,33 +50,42 @@ namespace BW_Beverages.Controllers
 
             ModelState.AddModelError("", "Username/password not found");
             return View(loginViewModel);
-
         }
 
         public IActionResult Register() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(LoginViewModel loginViewModel)
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
+            Console.WriteLine("\n+++++ ModelState valid?: " + ModelState.IsValid +" +++++\n");
+            Console.WriteLine("\n+++++ ModelState: " + ModelState+" +++++\n");
+            Console.WriteLine("\n+++++ registerViewModel: " +registerViewModel+" +++++\n");
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser() { UserName = loginViewModel.UserName };
-                var result = await _userManager.CreateAsync(user, loginViewModel.Password);
+                var user = new IdentityUser { UserName = registerViewModel.UserName };
+                Console.WriteLine("\n+++++ user: " +user+" +++++\n");
+                var result = await _userManager.CreateAsync(user, registerViewModel.Password);
+                Console.WriteLine("\n+++++ result: " +result+" +++++\n");
+                Console.WriteLine("\n+++++ result.Succeeded?: " +result.Succeeded+" +++++\n");
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("LoggedIn", "Account");
+                    return RedirectToAction("LoggedIn");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-            return View(loginViewModel);
+            return View(registerViewModel);
         }
 
-        public ViewResult LoggedIn() => View();
-
+        public IActionResult LoggedIn() => View();
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
