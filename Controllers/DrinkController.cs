@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DrinkAndGo.Controllers
+namespace BW_Beverages.Controllers
 {
     public class DrinkController : Controller
     {
