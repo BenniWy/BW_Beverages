@@ -1,4 +1,5 @@
 using BW_Beverages.Data;
+using BW_Beverages.Data.Models;
 using BW_Beverages.Data.Interfaces;
 using BW_Beverages.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -14,11 +15,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddTransient<IDrinkRepository, DrinkRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped(sp => ShoppingCart.GetCart(sp));
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
 
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -30,6 +34,8 @@ if (!app.Environment.IsDevelopment())
 
 //app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSession();
 
 app.UseRouting();
 
