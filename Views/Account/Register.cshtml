@@ -1,0 +1,32 @@
+@model LoginViewModel
+
+<div class="row loginForm">
+    <div class="col-md-8 offset-md-2">
+        <h2>Register now at BW Beverages </h2>
+        <form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal" role="form">
+            <h4>Create a new account and order your first drink today!</h4>
+            <hr />
+            <div class="mb-3 row">
+                <label asp-for="UserName" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label asp-for="Password" class="col-md-2 col-form-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 row justify-content-end">
+                <div class="col-md-10 offset-md-2">
+                    <input type="submit" class="btn btn-success" value="Register" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+

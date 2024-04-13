@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/site.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
     <title>BW Beverages</title>
 </head>
 <body>
@@ -17,12 +17,12 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-                        @await Component.InvokeAsync("CategoryMenu")
+                    @await Component.InvokeAsync("CategoryMenu")
                     <li class="nav-item"><a class="nav-link" asp-controller="About" asp-action="Index">About</a></li>
-<!-- Git -->
                     <li class="nav-item"><a class="nav-link" asp-controller="Contact" asp-action="Index">Contact Us</a></li>
+                    @await Component.InvokeAsync("ShoppingCartSummary")
                 </ul>
-<!-- Git -->
+                @await Html.PartialAsync("LoginPartial")
                 <form class="d-flex" asp-controller="Drink" asp-action="Search" method="get">
                     <input class="form-control me-2" type="search" placeholder="Search for a drink" aria-label="Search" name="searchString" value="@ViewData["searchString"]">
                     <button class="btn btn-outline-success" type="submit">Search</button>
@@ -43,3 +43,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

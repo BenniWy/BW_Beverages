@@ -3,6 +3,7 @@ using BW_Beverages.Data.Models;
 using BW_Beverages.Data.Interfaces;
 using BW_Beverages.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,9 @@ var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseNpgsql(connection));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddTransient<IDrinkRepository, DrinkRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
@@ -38,6 +42,8 @@ app.UseStaticFiles();
 app.UseSession();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

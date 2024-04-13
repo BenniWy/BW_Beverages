@@ -20,8 +20,8 @@
                     <tr>
                         <td class="text-center">@line.Amount</td>
                         <td class="text-start">@line.Drink.Name</td>
-                        <td class="text-end">@line.Drink.Price.ToString("C")</td>
-                        <td class="text-end">@((line.Amount * line.Drink.Price).ToString("C"))</td>
+                        <td class="text-end">@line.Drink.Price.ToString() €</td>
+                        <td class="text-end">@((line.Amount * line.Drink.Price).ToString()) €</td>
                         <td class="text-center"><a class="btn btn-sm btn-danger" asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-drinkId="@line.Drink.DrinkId">Remove</a></td>
                     </tr>
                 }
@@ -29,7 +29,7 @@
             <tfoot>
                 <tr>
                     <td colspan="3" class="text-end">Total:</td>
-                    <td class="text-end">@Model.ShoppingCartTotal.ToString("C")</td>
+                    <td class="text-end">@Model.ShoppingCartTotal.ToString() €</td>
                     <td></td>
                 </tr>
             </tfoot>
