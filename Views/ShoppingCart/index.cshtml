@@ -15,14 +15,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var line in Model.ShoppingCart.ShoppingCartItems)
+                @foreach (var line in Model.ShoppingCart?.ShoppingCartItems ?? Enumerable.Empty<ShoppingCartItem>())
                 {
                     <tr>
                         <td class="text-center">@line.Amount</td>
-                        <td class="text-start">@line.Drink.Name</td>
-                        <td class="text-end">@line.Drink.Price.ToString() €</td>
-                        <td class="text-end">@((line.Amount * line.Drink.Price).ToString()) €</td>
-                        <td class="text-center"><a class="btn btn-sm btn-danger" asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-drinkId="@line.Drink.DrinkId">Remove</a></td>
+                        <td class="text-start">@line.Drink?.Name</td>
+                        <td class="text-end">@line.Drink?.Price.ToString() €</td>
+                        <td class="text-end">@((line.Amount * line.Drink?.Price).ToString()) €</td>
+                        <td class="text-center"><a class="btn btn-sm btn-danger" asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-drinkId="@line?.Drink?.DrinkId">Remove</a></td>
                     </tr>
                 }
             </tbody>

@@ -250,7 +250,7 @@ namespace BW_Beverages.Data
             context.SaveChanges();
         }}
 
-        private static Dictionary<string, Category> categories;
+        private static Dictionary<string, Category>? categories;
         public static Dictionary<string, Category> Categories
         {
             get
@@ -267,7 +267,10 @@ namespace BW_Beverages.Data
 
                     foreach (Category genre in genresList)
                     {
-                        categories.Add(genre.CategoryName, genre);
+                        if (genre.CategoryName != null)
+                            {
+                                categories.Add(genre.CategoryName, genre);
+                            }
                     }
                 }
 

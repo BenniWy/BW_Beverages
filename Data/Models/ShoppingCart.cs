@@ -7,27 +7,38 @@ namespace BW_Beverages.Data.Models{
         private ShoppingCart (AppDbContext appDbContext){
             _appDbContext = appDbContext;
         }
-        public string ShoppingCartId { get; set; }
-        public List<ShoppingCartItem> ShoppingCartItems { get; set; }
+        public string? ShoppingCartId { get; set; }
+        public List<ShoppingCartItem>? ShoppingCartItems { get; set; }
 
         public static ShoppingCart GetCart(IServiceProvider services)
         {
-            ISession session = services.GetRequiredService<IHttpContextAccessor>()?
-                .HttpContext.Session;
+
+            var httpContextAccessor = services.GetRequiredService<IHttpContextAccessor>();
+
+            ISession? session = httpContextAccessor?.HttpContext?.Session;
 
             var context = services.GetService<AppDbContext>();
-            string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
 
-            session.SetString("CartId", cartId);
+            if (context != null)
+            {
+                string cartId = session?.GetString("CartId") ?? Guid.NewGuid().ToString();
 
-            return new ShoppingCart(context) { ShoppingCartId = cartId };
+                session?.SetString("CartId", cartId);
+
+                return new ShoppingCart(context) { ShoppingCartId = cartId };
+            }
+            else
+            {
+                throw new InvalidOperationException("AppDbContext is null.");
+            }
         }
 
-                public void AddToCart(Drink drink, int amount)
+
+        public void AddToCart(Drink drink, int amount)
         {
             var shoppingCartItem =
-                    _appDbContext.ShoppingCartItems.SingleOrDefault(
-                        s => s.Drink.DrinkId == drink.DrinkId && s.ShoppingCartId == ShoppingCartId);
+                _appDbContext.ShoppingCartItems.SingleOrDefault(
+                    s => s.Drink != null && s.Drink.DrinkId == drink.DrinkId && s.ShoppingCartId == ShoppingCartId);
 
             if (shoppingCartItem == null)
             {
@@ -50,8 +61,8 @@ namespace BW_Beverages.Data.Models{
         public int RemoveFromCart(Drink drink)
         {
             var shoppingCartItem =
-                    _appDbContext.ShoppingCartItems.SingleOrDefault(
-                        s => s.Drink.DrinkId == drink.DrinkId && s.ShoppingCartId == ShoppingCartId);
+                _appDbContext.ShoppingCartItems.SingleOrDefault(
+                    s => s.Drink != null && s.Drink.DrinkId == drink.DrinkId && s.ShoppingCartId == ShoppingCartId);
 
             var localAmount = 0;
 
@@ -66,9 +77,9 @@ namespace BW_Beverages.Data.Models{
                 {
                     _appDbContext.ShoppingCartItems.Remove(shoppingCartItem);
                 }
-            }
 
-            _appDbContext.SaveChanges();
+                _appDbContext.SaveChanges();
+            }
 
             return localAmount;
         }
@@ -95,9 +106,15 @@ namespace BW_Beverages.Data.Models{
 
         public decimal GetShoppingCartTotal()
         {
-            var total = _appDbContext.ShoppingCartItems.Where(c => c.ShoppingCartId == ShoppingCartId)
-                .Select(c => c.Drink.Price * c.Amount).Sum();
-            return total;
+            var items = _appDbContext.ShoppingCartItems
+                .Where(c => c.ShoppingCartId == ShoppingCartId)
+                .ToList();
+
+            var total = items
+                .Select(c => c.Drink?.Price * c.Amount)
+                .Sum();
+
+            return total ?? 0m;
         }
     }
 }

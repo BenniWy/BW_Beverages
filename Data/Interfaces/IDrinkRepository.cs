@@ -10,6 +10,6 @@ namespace BW_Beverages.Data.Interfaces
     {
         IEnumerable<Drink> Drinks { get; }
         IEnumerable<Drink> PreferredDrinks { get; }
-        Drink GetDrinkById(int drinkId);
+        Drink? GetDrinkById(int drinkId);
     }
 }

@@ -32,16 +32,19 @@ namespace BW_Beverages.Controllers
             if (!ModelState.IsValid)
                 return View(loginViewModel);
 
-            var user = await _userManager.FindByNameAsync(loginViewModel.UserName);
-            if (user != null)
+            if (loginViewModel.UserName != null && loginViewModel.Password != null)
             {
-                var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
-                if (result.Succeeded)
+                var user = await _userManager.FindByNameAsync(loginViewModel.UserName);
+                if (user != null)
                 {
-                    if (string.IsNullOrEmpty(loginViewModel.ReturnUrl))
-                        return RedirectToAction("Index", "Home");
+                    var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
+                    if (result.Succeeded)
+                    {
+                        if (string.IsNullOrEmpty(loginViewModel.ReturnUrl))
+                            return RedirectToAction("Index", "Home");
 
-                    return Redirect(loginViewModel.ReturnUrl);
+                        return Redirect(loginViewModel.ReturnUrl);
+                    }
                 }
             }
 
@@ -57,16 +60,23 @@ namespace BW_Beverages.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = registerViewModel.UserName };
-                var result = await _userManager.CreateAsync(user, registerViewModel.Password);
+                if (registerViewModel.Password != null)
+                {
+                    var user = new IdentityUser { UserName = registerViewModel.UserName };
+                    var result = await _userManager.CreateAsync(user, registerViewModel.Password);
 
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("LoggedIn");
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("LoggedIn");
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
-                foreach (var error in result.Errors)
+                else
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    ModelState.AddModelError("Password", "Password cannot be null.");
                 }
             }
             return View(registerViewModel);

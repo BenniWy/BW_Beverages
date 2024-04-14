@@ -36,7 +36,18 @@ namespace BW_Beverages.Controllers
             {
                 ModelState.AddModelError("", "Your card is empty, add some drinks first");
             }
-
+            if (!ModelState.IsValid)
+                {
+                    Console.WriteLine("\n ******* ModelState errors *******\n");
+                    foreach (var modelStateEntry in ModelState.Values)
+                    {
+                        foreach (var error in modelStateEntry.Errors)
+                        {
+                            Console.WriteLine(error.ErrorMessage);
+                        }
+                    }
+                    Console.WriteLine("\n *******************************\n");
+                }
             if (ModelState.IsValid)
             {
                 _orderRepository.CreateOrder(order);

@@ -22,7 +22,7 @@ namespace BW_Beverages.Data.Repositories
 
         public void CreateOrder(Order order)
         {
-            order.OrderPlaced = DateTime.Now;
+            order.OrderPlaced = DateTime.UtcNow;
 
             _appDbContext.Orders.Add(order);
 
@@ -37,10 +37,10 @@ namespace BW_Beverages.Data.Repositories
                     OrderId = order.OrderId,
                     Price = shoppingCartItem.Drink.Price
                 };
-
+                order.OrderDetails.Add(orderDetail);
                 _appDbContext.OrderDetails.Add(orderDetail);
             }
-
+            
             _appDbContext.SaveChanges();
         }
     }

@@ -8,6 +8,6 @@ namespace BW_Beverages.ViewModels
 {
     public class HomeViewModel
     {
-        public IEnumerable<Drink> PreferredDrinks { get; set; }
+        public IEnumerable<Drink>? PreferredDrinks { get; set; }
     }
 }

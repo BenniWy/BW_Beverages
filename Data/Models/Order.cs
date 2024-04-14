@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace BW_Beverages.Data.Models
         [BindNever]
         public int OrderId { get; set; }
 
-        public List<OrderDetail> OrderLines { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
         [Required(ErrorMessage = "Please enter your first name")]
         [Display(Name = "First name")]

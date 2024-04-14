@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Identity.EntityFrameworkCore
 @inject SignInManager<IdentityUser> SignInManager
 
-@if (Model.ShoppingCart.ShoppingCartItems.Count > 0 && SignInManager.IsSignedIn(User))
+@if (Model?.ShoppingCart?.ShoppingCartItems != null && Model.ShoppingCart.ShoppingCartItems.Count > 0 && SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
         <a class="nav-link" asp-controller="ShoppingCart">
@@ -14,3 +14,4 @@
         </a>
     </li>
 }
+

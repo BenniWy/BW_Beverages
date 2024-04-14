@@ -34,13 +34,12 @@ namespace BW_Beverages.Controllers
             else
             {
                 if (string.Equals("Alcoholic", _category, StringComparison.OrdinalIgnoreCase))
-                    drinks = _drinkRepository.Drinks.Where(p => p.Category.CategoryName.Equals("Alcoholic")).OrderBy(p => p.Name);
+                    drinks = _drinkRepository.Drinks.Where(p => p.Category?.CategoryName?.Equals("Alcoholic") ?? false).OrderBy(p => p.Name);
                 else
-                    drinks = _drinkRepository.Drinks.Where(p => p.Category.CategoryName.Equals("Non-alcoholic")).OrderBy(p => p.Name);
+                    drinks = _drinkRepository.Drinks.Where(p => p.Category?.CategoryName?.Equals("Non-alcoholic") ?? false).OrderBy(p => p.Name);
 
                 currentCategory = _category;
             }
-
             return View(new DrinksListViewModel
             {
                 Drinks = drinks,
@@ -60,7 +59,7 @@ namespace BW_Beverages.Controllers
             }
             else
             {
-                drinks = _drinkRepository.Drinks.Where(p=> p.Name.ToLower().Contains(_searchString.ToLower()));
+                drinks = _drinkRepository.Drinks.Where(p=> p.Name?.ToLower().Contains(_searchString.ToLower()) ?? false);
             }
 
             return View("~/Views/Drink/List.cshtml", new DrinksListViewModel{Drinks = drinks, CurrentCategory = "All drinks" });

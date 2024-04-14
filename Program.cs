@@ -21,9 +21,11 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddTransient<IDrinkRepository, DrinkRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped(sp => ShoppingCart.GetCart(sp));
+builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddMemoryCache();
