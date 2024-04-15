@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BW_Beverages.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240414180216_InitialCreate")]
+    [Migration("20240415110818_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -100,7 +100,6 @@ namespace BW_Beverages.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<string>("AddressLine2")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("City")
@@ -141,8 +140,8 @@ namespace BW_Beverages.Migrations
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("ZipCode")
                         .IsRequired()

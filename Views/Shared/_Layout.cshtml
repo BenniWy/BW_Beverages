@@ -21,7 +21,9 @@
                     @await Component.InvokeAsync("CategoryMenu")
                     <li class="nav-item"><a class="nav-link" asp-controller="About" asp-action="Index">About</a></li>
                     <li class="nav-item"><a class="nav-link" asp-controller="Contact" asp-action="Index">Contact Us</a></li>
-                    @await Component.InvokeAsync("ShoppingCartSummary")
+                    <span style="pointer-events: none;">
+                        @await Component.InvokeAsync("ShoppingCartSummary")
+                    </span>
                 </ul>
                 @await Html.PartialAsync("LoginPartial")
                 <form class="d-flex" asp-controller="Drink" asp-action="Search" method="get">

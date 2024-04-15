@@ -97,7 +97,6 @@ namespace BW_Beverages.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<string>("AddressLine2")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("City")
@@ -138,8 +137,8 @@ namespace BW_Beverages.Migrations
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("ZipCode")
                         .IsRequired()

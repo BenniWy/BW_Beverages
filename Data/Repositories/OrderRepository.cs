@@ -28,17 +28,23 @@ namespace BW_Beverages.Data.Repositories
 
             var shoppingCartItems = _shoppingCart.ShoppingCartItems;
 
-            foreach (var shoppingCartItem in shoppingCartItems)
+            if (shoppingCartItems != null)
             {
-                var orderDetail = new OrderDetail()
+                foreach (var shoppingCartItem in shoppingCartItems)
                 {
-                    Amount = shoppingCartItem.Amount,
-                    DrinkId = shoppingCartItem.Drink.DrinkId,
-                    OrderId = order.OrderId,
-                    Price = shoppingCartItem.Drink.Price
-                };
-                order.OrderDetails.Add(orderDetail);
-                _appDbContext.OrderDetails.Add(orderDetail);
+                    if (shoppingCartItem.Drink != null)
+                    {
+                        var orderDetail = new OrderDetail()
+                        {
+                            Amount = shoppingCartItem.Amount,
+                            DrinkId = shoppingCartItem.Drink.DrinkId,
+                            OrderId = order.OrderId,
+                            Price = shoppingCartItem.Drink.Price
+                        };
+                        order.OrderDetails.Add(orderDetail);
+                        _appDbContext.OrderDetails.Add(orderDetail);
+                    }
+                }
             }
             
             _appDbContext.SaveChanges();
