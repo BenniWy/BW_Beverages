@@ -29,8 +29,6 @@ services:
     ports:
       - "5434:5432"
     restart: always
-    volumes:
-      - bwbeverages_data:/var/lib/postgresql/data
     networks:
       - dev
 
