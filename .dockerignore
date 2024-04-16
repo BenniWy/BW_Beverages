@@ -1,0 +1,7 @@
+# Ignore .NET specific files
+**/bin/
+**/obj/
+
+# Ignore Visual Studio files
+.vscode/
+.vs/
