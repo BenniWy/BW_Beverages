@@ -12,7 +12,7 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - ConnectionStrings__DefaultConnection=User ID=postgres;Password=postgres;Server=bwbeverages_db;Port=5432;Database=BWDbBeverages;Pooling=true;
+      - ConnectionStrings__DefaultConnections
       - ASPNETCORE_URLS=http://+:80
     networks:
       - dev
@@ -21,9 +21,9 @@ services:
     image: postgres:latest
     container_name: bwbeverages_db
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=BWDbBeverages
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
     ports:
       - "5434:5432"
     restart: always
